@@ -17,6 +17,21 @@ class Dial extends Voice
         parent::__construct("Dial", $attrib);
     }
 
+    public function onAnswer($tag, $attribs = [])
+    {
+        return $this->setAttribute('onanswer', $this->append($tag, $attribs), true);
+    }
+
+    public function onNoAnswer($tag, $attribs = [])
+    {
+        return $this->setAttribute('onnoanswer', $this->append($tag, $attribs), true);
+    }
+
+    public function noAnswer($tag, $attribs = [])
+    {
+        return $this->setAttribute('onnoanswer', $this->append($tag, $attribs), true);
+    }
+
     public function getDefaultAttributes()
     {
         return [
@@ -25,7 +40,7 @@ class Dial extends Voice
             "timeout" => 30,
             "stickyagent" => false,
             "smartagent" => false,
-            "retries" => 2
+            "retries" => 2,
         ];
     }
 }

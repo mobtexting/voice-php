@@ -168,3 +168,65 @@ Following tags allow nested tags
   }
 ]
 ```
+
+### Example of filter tag with nested tags
+
+```php
+  $response = new Mobtexting\Voice();
+  $response->answer();
+  $response->say('Hello');
+
+$dial = $response->dial('700xxx', '80300xxxxx');
+$dial->setAttribute('retries', 1);
+
+$play = $dial->onAnswer('play', ['custom/14d81c2e3c3f8110a7e8f36331e1b9b3']);
+$play->setAttribute('duration', 30);
+
+$play = $dial->onNoAnswer('play', ['custom/14d81c2e3c3f8110a7e8f36331e1b9b3']);
+
+echo $response;
+```
+
+### Response
+
+```json
+[
+  {
+    "Answer": {
+      "delay": 0
+    }
+  },
+  {
+    "SayText": {
+      "language": "EN",
+      "engine": "polly",
+      "message": "Hello"
+    }
+  },
+  {
+    "Dial": {
+        "to": "7008409026",
+        "callerid": "+918030072306",
+        "retries": 0,
+        "onanswer": [
+            {
+                "Play": {
+                "path": "custom/14d81c2e3c3f8110a7e8f36331e1b9b3",
+                "type": "gsm",
+                "duration": 30
+                }
+            }
+        ],
+        "onnoanswer": [
+            {
+                "Play": {
+                "path": "custom/d2a3030926b57807e0067244f040f70e",
+                "type": "gsm",
+                "duration": 30
+                }
+            }
+        ]
+    }
+  }
+]
+```
