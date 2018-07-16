@@ -18,14 +18,24 @@ class Menu extends Voice
         parent::__construct("Menu", $attribs);
     }
 
-    public function onFail($verb, $attribs = [])
+    public function onFail($verb, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('onFail', $this->append($verb, $attribs), true);
+        if($isSequential){
+            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($this->append($verb, $attribs)) );
+            return $this->attributes;
+        }else {
+            return $this->setAttribute('onfail', array($this->append($verb, $attribs)), true);
+        }
     }
 
-    public function onTimeout($verb, $attribs = [])
+    public function onTimeout($verb, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('timeout', $this->append($verb, $attribs), true);
+        if($isSequential){
+            $this->attributes['timeout'] = array_merge($this->attributes['timeout'], array($this->append($verb, $attribs)) );
+            return $this->attributes;
+        }else {
+            return $this->setAttribute('timeout', array($this->append($verb, $attribs)), true);
+        }
     }
 
     public function getDefaultAttributes()
