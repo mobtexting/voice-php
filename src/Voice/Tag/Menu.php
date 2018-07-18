@@ -20,22 +20,25 @@ class Menu extends Voice
 
     public function onFail($verb, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($verb, $attribs);
         if($isSequential){
-            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($this->append($verb, $attribs)) );
-            return $this->attributes;
+            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($newTag) );
         }else {
-            return $this->setAttribute('onfail', array($this->append($verb, $attribs)), true);
+            $this->setAttribute('onfail', array($newTag), true);
         }
+        return $newTag;
     }
 
     public function onTimeout($verb, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($verb, $attribs);
         if($isSequential){
-            $this->attributes['timeout'] = array_merge($this->attributes['timeout'], array($this->append($verb, $attribs)) );
-            return $this->attributes;
+            $this->attributes['timeout'] = array_merge($this->attributes['timeout'], array($newTag) );
         }else {
-            return $this->setAttribute('timeout', array($this->append($verb, $attribs)), true);
+            $this->setAttribute('timeout', array($newTag), true);
         }
+
+        return $newTag;
     }
 
     public function getDefaultAttributes()
