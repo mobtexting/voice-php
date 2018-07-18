@@ -19,32 +19,35 @@ class Dial extends Voice
 
     public function onAnswer($tag, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($tag, $attribs);
         if($isSequential){
-            $this->attributes['onanswer'] = array_merge($this->attributes['onanswer'], array($this->append($tag, $attribs)) );
-            return $this->attributes;
+            $this->attributes['onanswer'] = array_merge($this->attributes['onanswer'], array($newTag) );
         }else {
-            return $this->setAttribute('onanswer', array($this->append($tag, $attribs)), true);
+            $this->setAttribute('onanswer', array($newTag), true);
         }
+        return $newTag;
     }
 
     public function onNoAnswer($tag, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($tag, $attribs);
         if($isSequential){
-            $this->attributes['onnoanswer'] = array_merge($this->attributes['onnoanswer'], array($this->append($tag, $attribs)) );
-            return $this->attributes;
+            $this->attributes['onnoanswer'] = array_merge($this->attributes['onnoanswer'], array($newTag) );
         }else {
-            return $this->setAttribute('onnoanswer', array($this->append($tag, $attribs)), true);
+            $this->setAttribute('onnoanswer', array($newTag), true);
         }
+        return $newTag;
     }
 
     public function noAnswer($tag, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($tag, $attribs);
         if($isSequential){
-            $this->attributes['onnoanswer'] = array_merge($this->attributes['onnoanswer'], array($this->append($tag, $attribs)) );
-            return $this->attributes;
+            $this->attributes['onnoanswer'] = array_merge($this->attributes['onnoanswer'], array($newTag) );
         }else {
-            return $this->setAttribute('onnoanswer', array($this->append($tag, $attribs)), true);
+            $this->setAttribute('onnoanswer', array($newTag), true);
         }
+        return $newTag;
     }
 
     public function getDefaultAttributes()

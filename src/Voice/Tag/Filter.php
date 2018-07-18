@@ -32,22 +32,26 @@ class Filter extends Voice
 
     public function onFail($tag, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($tag, $attribs);
         if($isSequential){
-            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($this->append($tag, $attribs)) );
-            return $this->attributes;
+            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($newTag) );
         }else {
-            return $this->setAttribute('onfail', array($this->append($tag, $attribs)), true);
+            $this->setAttribute('onfail', array($newTag), true);
         }
+
+        return $newTag;
     }
 
     public function onPass($tag, $attribs = [], $isSequential = false)
     {
+        $newTag = $this->append($tag, $attribs);
         if($isSequential){
-            $this->attributes['onpass'] = array_merge($this->attributes['onpass'], array($this->append($tag, $attribs)) );
-            return $this->attributes;
+            $this->attributes['onpass'] = array_merge($this->attributes['onpass'], array($newTag) );
         }else {
-            return $this->setAttribute('onpass', array($this->append($tag, $attribs)), true);
+            $this->setAttribute('onpass', array($newTag), true);
         }
+
+        return $newTag;
     }
 
     public function getDefaultAttributes()
