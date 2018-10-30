@@ -54,7 +54,7 @@ class Menu extends Voice
             'maxrepeat'       => 3,
             'type'            => 'parallel',
             'dtmftimeout'     => 3,
-            'dtmftdefaultkey' => ''
+            'dtmfdefaultkey' => ''
         ];
     }
 }
