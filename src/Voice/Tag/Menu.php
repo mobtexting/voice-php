@@ -26,7 +26,7 @@ class Menu extends Voice
         parent::__construct("Menu", $attribs);
     }
 
-    public function onFail($verb, $attribs = [])
+    public function onFail($verb, $attribs = [], $isSequential = false)
     {
         $new_tag = $this->append($verb, $attribs);
         $this->setAttribute('onfail', array($new_tag), false);
@@ -40,7 +40,7 @@ class Menu extends Voice
         return $new_tag;
     }
 
-    public function onTimeout($verb, $attribs = [])
+    public function onTimeout($verb, $attribs = [], $isSequential = false)
     {
         $new_tag = $this->append($verb, $attribs);
         $this->setAttribute('timeout', array($new_tag), false);

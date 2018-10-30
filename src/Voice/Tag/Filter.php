@@ -30,14 +30,28 @@ class Filter extends Voice
         parent::__construct("Filter", ['type' => $type, $unit => $data]);
     }
 
-    public function onFail($tag, $attribs = [])
+    public function onFail($tag, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('onfail', $this->append($tag, $attribs), true);
+        $newTag = $this->append($tag, $attribs);
+        if($isSequential){
+            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($newTag) );
+        }else {
+            $this->setAttribute('onfail', array($newTag), true);
+        }
+
+        return $newTag;
     }
 
-    public function onPass($tag, $attribs = [])
+    public function onPass($tag, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('onpass', $this->append($tag, $attribs), true);
+        $newTag = $this->append($tag, $attribs);
+        if($isSequential){
+            $this->attributes['onpass'] = array_merge($this->attributes['onpass'], array($newTag) );
+        }else {
+            $this->setAttribute('onpass', array($newTag), true);
+        }
+
+        return $newTag;
     }
 
     public function getDefaultAttributes()

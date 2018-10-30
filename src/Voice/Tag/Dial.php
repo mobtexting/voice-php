@@ -17,14 +17,14 @@ class Dial extends Voice
         parent::__construct("Dial", $attrib);
     }
 
-    public function onAnswer($tag, $attribs = [])
+    public function onAnswer($tag, $attribs = [], $isSequential = false)
     {
         $new_tag = $this->append($tag, $attribs);
         $this->setAttribute('onanswer', array($new_tag), false);
         return $new_tag;
     }
 
-    public function onNoAnswer($tag, $attribs = [])
+    public function onNoAnswer($tag, $attribs = [], $isSequential = false)
     {
         $new_tag = $this->append($tag, $attribs);
         $this->setAttribute('onnoanswer', array($new_tag), false);
