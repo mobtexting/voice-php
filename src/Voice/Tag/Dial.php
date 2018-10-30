@@ -17,19 +17,37 @@ class Dial extends Voice
         parent::__construct("Dial", $attrib);
     }
 
-    public function onAnswer($tag, $attribs = [])
+    public function onAnswer($tag, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('onanswer', $this->append($tag, $attribs), true);
+        $newTag = $this->append($tag, $attribs);
+        if($isSequential){
+            $this->attributes['onanswer'] = array_merge($this->attributes['onanswer'], array($newTag) );
+        }else {
+            $this->setAttribute('onanswer', array($newTag), true);
+        }
+        return $newTag;
     }
 
-    public function onNoAnswer($tag, $attribs = [])
+    public function onNoAnswer($tag, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('onnoanswer', $this->append($tag, $attribs), true);
+        $newTag = $this->append($tag, $attribs);
+        if($isSequential){
+            $this->attributes['onnoanswer'] = array_merge($this->attributes['onnoanswer'], array($newTag) );
+        }else {
+            $this->setAttribute('onnoanswer', array($newTag), true);
+        }
+        return $newTag;
     }
 
-    public function noAnswer($tag, $attribs = [])
+    public function noAnswer($tag, $attribs = [], $isSequential = false)
     {
-        return $this->setAttribute('onnoanswer', $this->append($tag, $attribs), true);
+        $newTag = $this->append($tag, $attribs);
+        if($isSequential){
+            $this->attributes['onnoanswer'] = array_merge($this->attributes['onnoanswer'], array($newTag) );
+        }else {
+            $this->setAttribute('onnoanswer', array($newTag), true);
+        }
+        return $newTag;
     }
 
     public function getDefaultAttributes()
