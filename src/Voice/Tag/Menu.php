@@ -39,6 +39,12 @@ class Menu extends Voice
         $this->setAttribute($key, array($new_tag), false);
         return $new_tag;
     }
+    public function onWrongKey($verb, $attribs = [])
+    {
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute('wrongkey', array($new_tag), false);
+        return $new_tag;
+    }
 
     public function onTimeout($verb, $attribs = [], $isSequential = false)
     {
