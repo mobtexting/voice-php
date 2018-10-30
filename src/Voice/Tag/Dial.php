@@ -19,17 +19,16 @@ class Dial extends Voice
 
     public function onAnswer($tag, $attribs = [])
     {
-        return $this->setAttribute('onanswer', $this->append($tag, $attribs), true);
+        $new_tag = $this->append($tag, $attribs);
+        $this->setAttribute('onanswer', array($new_tag), false);
+        return $new_tag;
     }
 
     public function onNoAnswer($tag, $attribs = [])
     {
-        return $this->setAttribute('onnoanswer', $this->append($tag, $attribs), true);
-    }
-
-    public function noAnswer($tag, $attribs = [])
-    {
-        return $this->setAttribute('onnoanswer', $this->append($tag, $attribs), true);
+        $new_tag = $this->append($tag, $attribs);
+        $this->setAttribute('onnoanswer', array($new_tag), false);
+        return $new_tag;
     }
 
     public function getDefaultAttributes()

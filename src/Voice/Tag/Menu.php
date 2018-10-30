@@ -13,28 +13,47 @@ class Menu extends Voice
         'onfail'
     ];
 
-    public function __construct($prompt, $attribs = [])
+    public function __construct($prompt = null, $attribs = [])
     {
+        if ($prompt) {
+            if (is_array($prompt)) {
+                $attribs = array_merge($prompt, $attribs);
+            } else {
+                $attribs['prompt'] = $prompt;
+            }
+        }
+
         parent::__construct("Menu", $attribs);
     }
 
     public function onFail($verb, $attribs = [])
     {
-        return $this->setAttribute('onFail', $this->append($verb, $attribs), true);
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute('onfail', array($new_tag), false);
+        return $new_tag;
+    }
+
+    public function onKeyPress($key, $verb, $attribs = [])
+    {
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute($key, array($new_tag), false);
+        return $new_tag;
     }
 
     public function onTimeout($verb, $attribs = [])
     {
-        return $this->setAttribute('timeout', $this->append($verb, $attribs), true);
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute('timeout', array($new_tag), false);
+        return $new_tag;
     }
 
     public function getDefaultAttributes()
     {
         return [
-            'waittime' => 10,
-            'maxrepeat' => 3,
-            'type' => 'parallel',
-            'dtmftimeout' => 3,
+            'waittime'        => 10,
+            'maxrepeat'       => 3,
+            'type'            => 'parallel',
+            'dtmftimeout'     => 3,
             'dtmftdefaultkey' => ''
         ];
     }
