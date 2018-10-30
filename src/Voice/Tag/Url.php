@@ -14,9 +14,11 @@ class Url extends Voice
 
     public function onResponse($value, $tag)
     {
-        return $this->setAttribute([
-            'response' => [$value => $this->append($tag)]
+        $new_tag = $this->append($tag);
+        $this->setAttribute([
+            'response' => [$value => array($new_tag)]
         ], null, true);
+        return $new_tag;
     }
 
     public function getDefaultAttributes()
