@@ -7,9 +7,9 @@ use Mobtexting\Voice\Voice;
 class Voice
 {
     protected $name;
-    protected $append = [];
+    protected $append     = [];
     protected $attributes = [];
-    protected $nested = [];
+    protected $nested     = [];
 
     /**
      * DialPlan Constructor
@@ -44,13 +44,13 @@ class Voice
         if ($instance) {
             return $value;
         }
-        
+
         return $this;
     }
-    
+
     public function append($verb, $args = [])
     {
-        $widget = 'Mobtexting\\Voice\\Tag\\'.ucfirst(strtolower($verb));
+        $widget = 'Mobtexting\\Voice\\Tag\\' . ucfirst(strtolower($verb));
 
         $widget = new $widget(...$args);
 
@@ -94,7 +94,7 @@ class Voice
         $element = array();
         $attributes = $this->getDefaultAttributes();
 
-        $attributes = array_merge($attributes, $this->processAttribs($this->attributes));
+        $attributes = array_replace($attributes, $this->processAttribs($this->attributes));
 
         $element[$this->name] = $attributes;
      

@@ -13,42 +13,54 @@ class Menu extends Voice
         'onfail'
     ];
 
-    public function __construct($prompt, $attribs = [])
+    public function __construct($prompt = null, $attribs = [])
     {
+        if ($prompt) {
+            if (is_array($prompt)) {
+                $attribs = array_merge($prompt, $attribs);
+            } else {
+                $attribs['prompt'] = $prompt;
+            }
+        }
+
         parent::__construct("Menu", $attribs);
     }
 
     public function onFail($verb, $attribs = [], $isSequential = false)
     {
-        $newTag = $this->append($verb, $attribs);
-        if($isSequential){
-            $this->attributes['onfail'] = array_merge($this->attributes['onfail'], array($newTag) );
-        }else {
-            $this->setAttribute('onfail', array($newTag), true);
-        }
-        return $newTag;
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute('onfail', array($new_tag), false);
+        return $new_tag;
+    }
+
+    public function onKeyPress($key, $verb, $attribs = [])
+    {
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute($key, array($new_tag), false);
+        return $new_tag;
+    }
+    public function onWrongKey($verb, $attribs = [])
+    {
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute('wrongkey', array($new_tag), false);
+        return $new_tag;
     }
 
     public function onTimeout($verb, $attribs = [], $isSequential = false)
     {
-        $newTag = $this->append($verb, $attribs);
-        if($isSequential){
-            $this->attributes['timeout'] = array_merge($this->attributes['timeout'], array($newTag) );
-        }else {
-            $this->setAttribute('timeout', array($newTag), true);
-        }
-
-        return $newTag;
+        $new_tag = $this->append($verb, $attribs);
+        $this->setAttribute('timeout', array($new_tag), false);
+        return $new_tag;
     }
 
     public function getDefaultAttributes()
     {
         return [
-            'waittime' => 10,
-            'maxrepeat' => 3,
-            'type' => 'parallel',
-            'dtmftimeout' => 3,
-            'dtmftdefaultkey' => ''
+            'waittime'        => 10,
+            'maxrepeat'       => 3,
+            'type'            => 'parallel',
+            'dtmftimeout'     => 3,
+            'dtmfdefaultkey' => ''
         ];
     }
 }
